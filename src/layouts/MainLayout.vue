@@ -14,20 +14,26 @@
         <q-toolbar-title>
           <div class="row">
             <div class="col-2">
-              <q-img src="~assets/img/Logo Simplifica.png" />
+              <q-img src="~assets/img/logoSimplifica.png" />
             </div>
           </div>
         </q-toolbar-title>
 
-        <div class="col-1">
-          <q-img src="~assets/img/Logo PMT.png" />
-        </div>
+        <q-btn-dropdown flat color="dark" icon="person">
+          <q-list>
+            <q-item clickable v-close-popup @click="handleLogout">
+              <q-item-section>
+                <q-item-label>Logout</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header> Setores </q-item-label>
 
         <EssentialLink
           v-for="link in linksList"

@@ -2,13 +2,13 @@
   <q-page style="background-color: rgba(18, 18, 18, 1)" padding>
     <div class="q-pt-xl q-pa-md">
       <div class="row q-col-gutter-md">
-        <div class="col-12">
+        <div class="col-10">
           <div class="text-h4 text-weight-bold text-align: justify text-white">
-            Acima de nóis, só<br />a barra de supino!
+            Estoque sala da T.I
           </div>
         </div>
-        <div class="col-12">
-          <q-btn label="adicionar" color="primary" @click="abrirDialogo" />
+        <div class="col-2">
+          <q-btn label="adicionar" color="accent" @click="abrirDialogo" />
         </div>
         <div class="col-12">
           <q-input
@@ -102,11 +102,11 @@
           </div>
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Cancel" color="accent" v-close-popup />
           <q-btn
             flat
             label="salvar"
-            color="primary"
+            color="accent"
             @click="salvarInformacoes"
           />
         </q-card-actions>
