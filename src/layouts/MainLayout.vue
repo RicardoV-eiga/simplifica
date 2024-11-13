@@ -13,9 +13,7 @@
 
         <q-toolbar-title>
           <div class="row">
-            <div class="col-2">
-              <q-img src="~assets/img/logoSimplifica.png" />
-            </div>
+            <div class="col-2">Controle de Estoque</div>
           </div>
         </q-toolbar-title>
 
@@ -59,16 +57,16 @@ defineOptions({
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
+    title: "T.I",
+    caption: "estoque",
+    icon: "computer",
+    link: "/#/TIestoque",
   },
   {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
+    title: "Geral",
+    caption: "estoque",
+    icon: "inventory",
+    link: "/#/Geral",
   },
   {
     title: "Discord Chat Channel",

@@ -1,15 +1,17 @@
 <template>
-  <q-page style="background-color: rgba(18, 18, 18, 1)" padding>
+  <q-page class="bg-dark" padding>
     <div class="q-pt-xl q-pa-md">
       <div class="row q-col-gutter-md">
         <div class="col-10">
-          <div class="text-h4 text-weight-bold text-align: justify text-white">
+          <div class="text-h4 text-weight-bold text-white">
             Estoque sala da T.I
           </div>
         </div>
+
         <div class="col-2">
-          <q-btn label="adicionar" color="accent" @click="abrirDialogo" />
+          <q-btn label="Adicionar" color="accent" @click="abrirDialogo" />
         </div>
+
         <div class="col-12">
           <q-input
             v-model="search"
@@ -19,7 +21,7 @@
             placeholder="Pesquisar produto"
             class="q-mb-md"
           >
-            <template v-slot:append>
+            <template #append>
               <q-icon name="search" />
             </template>
           </q-input>
@@ -29,13 +31,25 @@
           <q-table
             :rows="filteredInformacoes"
             :columns="colunas"
-            row-key="Estoque"
+            row-key="id"
             dark
           >
-            <template v-slot:body-cell-edit="props">
+            <template #body-cell-edit="props">
               <q-td :props="props">
-                <q-btn icon="edit" @click="editarInformacao(props.row)" />
-                <q-btn icon="delete" @click="excluirInformacao(props.row)" />
+                <q-btn-group>
+                  <q-btn
+                    icon="edit"
+                    flat
+                    dense
+                    @click="editarInformacao(props.row)"
+                  />
+                  <q-btn
+                    icon="delete"
+                    flat
+                    dense
+                    @click="excluirInformacao(props.row)"
+                  />
+                </q-btn-group>
               </q-td>
             </template>
           </q-table>
@@ -45,67 +59,45 @@
 
     <q-dialog v-model="dialog" persistent>
       <q-card>
-        <q-card-section class="row items-center">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-12">
-                <label class="text-h6">Data</label>
-                <q-input
-                  dense
-                  class="text-h6"
-                  hide-bottom-space
-                  bg-color="white"
-                  outlined
-                  rounded
-                  emit-value
-                  map-options
-                  type="Date"
-                  v-model="formData.data"
-                  label="Data"
-                />
-              </div>
+        <q-card-section>
+          <div class="row q-col-gutter-md">
+            <div class="col-12">
+              <q-input
+                v-model="formData.data"
+                dense
+                outlined
+                type="date"
+                label="Data"
+              />
             </div>
-            <div class="row">
-              <div class="col-5 q-mr-lg">
-                <label class="text-h6">Produto</label>
-                <q-input
-                  dense
-                  class="text-h6"
-                  hide-bottom-space
-                  bg-color="white"
-                  outlined
-                  rounded
-                  emit-value
-                  map-options
-                  type="text"
-                  v-model="formData.produto"
-                  label="Produto"
-                />
-              </div>
-              <div class="col-4 q-mr-lg">
-                <label class="text-h6">Quantidade</label>
-                <q-input
-                  dense
-                  class="text-h6"
-                  hide-bottom-space
-                  bg-color="white"
-                  outlined
-                  rounded
-                  emit-value
-                  map-options
-                  type="number"
-                  v-model="formData.quantidade"
-                  label="Quantidade"
-                />
-              </div>
+
+            <div class="col-7">
+              <q-input
+                v-model="formData.produto"
+                dense
+                outlined
+                type="text"
+                label="Produto"
+              />
+            </div>
+
+            <div class="col-5">
+              <q-input
+                v-model="formData.quantidade"
+                dense
+                outlined
+                type="number"
+                label="Quantidade"
+              />
             </div>
           </div>
         </q-card-section>
+
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="accent" v-close-popup />
+          <q-btn flat label="Cancelar" color="accent" v-close-popup />
           <q-btn
             flat
-            label="salvar"
+            label="Salvar"
             color="accent"
             @click="salvarInformacoes"
           />
@@ -113,27 +105,32 @@
       </q-card>
     </q-dialog>
 
-    <q-footer elevated class="bg-dark text-white">
+    <q-footer elevated class="bg-dark">
       <q-tabs v-model="tab" class="text-primary">
         <q-tab
           name="home"
           icon="home"
-          label="Inicio"
+          label="Início"
           @click="changePage('home')"
         />
         <q-tab
-          name="cycle"
-          icon="syringe"
-          label="Ciclo"
-          @click="changePage('cycle')"
+          name="ti"
+          icon="computer"
+          label="T.I"
+          @click="changePage('ti')"
         />
         <q-tab
-          name="evolution"
-          icon="graphic"
-          label="Evolução"
-          @click="changePage('evolution')"
+          name="geral"
+          icon="inventory"
+          label="Geral"
+          @click="changePage('geral')"
         />
-        <q-tab name="pr" icon="pr" label="PR" @click="changePage('pr')" />
+        <q-tab
+          name="pr"
+          icon="description"
+          label="PR"
+          @click="changePage('pr')"
+        />
       </q-tabs>
     </q-footer>
   </q-page>
@@ -149,6 +146,8 @@ export default defineComponent({
   setup() {
     const dialog = ref(false);
     const dialogView = ref(false);
+    const tab = ref("home");
+    const router = useRouter();
     const idEditando = ref(null);
     const formDataView = ref({});
     const search = ref("");
@@ -220,8 +219,18 @@ export default defineComponent({
         informacoes.value.splice(index, 1);
       }
     }
+    const changePage = (pageName) => {
+      const routes = {
+        home: "/inicio",
+        ti: "/TIestoque",
+        geral: "/geral",
+      };
+      router.push(routes[pageName]);
+    };
 
     return {
+      tab,
+      changePage,
       search,
       filteredInformacoes,
       dialog,
