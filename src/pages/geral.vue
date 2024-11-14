@@ -1,5 +1,5 @@
 <template>
-  <q-page style="background-color: rgba(18, 18, 18, 1)" padding>
+  <q-page class="bg-dark" padding>
     <div class="q-pt-xl q-pa-md">
       <div class="row q-col-gutter-md">
         <div class="col-10">
@@ -149,7 +149,12 @@
           label="Geral"
           @click="changePage('geral')"
         />
-        <q-tab name="pr" icon="pr" label="PR" @click="changePage('pr')" />
+        <q-tab
+          name="relatorio"
+          icon="description"
+          label="Relatório"
+          @click="changePage('relatorio')"
+        />
       </q-tabs>
     </q-footer>
   </q-page>
@@ -157,7 +162,6 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { data } from "autoprefixer";
 import { computed } from "vue";
 import { defineComponent, ref } from "vue";
 
